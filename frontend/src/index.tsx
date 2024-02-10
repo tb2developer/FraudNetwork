@@ -14,6 +14,7 @@ moment.tz.setDefault(process.env.REACT_APP_TIMEZONE);
 export const socketUrl: string = process.env.REACT_APP_SOCKET_IO_URL as string;
 
 export const socket = io(socketUrl, {
+    withCredentials: true,
     transports: ["polling"],
 });
 

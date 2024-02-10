@@ -33,6 +33,9 @@ class RunWorkerCommand extends Command
 
         $websocketWorker->onConnect = static function ($connection) use (&$sessions) {
             $connection->onWebSocketConnect = static function ($connection) use (&$sessions) {
+                $connection->header("Access-Control-Allow-Origin: *");
+                $connection->header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+                $connection->header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
                 $sessions[$_GET['session_id']] = $connection;
             };
         };
