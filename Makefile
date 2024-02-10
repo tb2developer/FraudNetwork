@@ -12,7 +12,15 @@ ports:
 	sudo iptables -I INPUT -p tcp -m tcp --dport ${BACKEND_PORT} -j ACCEPT
 	sudo iptables -I INPUT -p tcp -m tcp --dport ${FRONTEND_PORT} -j ACCEPT
 	sudo iptables -I INPUT -p tcp -m tcp --dport ${GOLANG_PORT} -j ACCEPT
+	sudo iptables -I INPUT -p tcp -m tcp --dport 8089 -j ACCEPT
 	sudo iptables -I INPUT -p tcp -m tcp --dport 8000 -j ACCEPT
+	sudo iptables -I INPUT -p tcp -m tcp --dport 3636 -j ACCEPT
+	sudo iptables -I INPUT -p tcp -m tcp --dport 3434 -j ACCEPT
+	sudo iptables -I INPUT -p tcp -m tcp --dport 5000 -j ACCEPT
+	sudo iptables -I INPUT -p tcp -m tcp --dport 8080 -j ACCEPT
+	sudo iptables -I INPUT -p tcp -m tcp --dport 3000 -j ACCEPT
+	sudo iptables -I INPUT -p tcp -m tcp --dport 3306 -j ACCEPT
+	sudo iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
 
 env:
 	cp backend/.env.example backend/.env
@@ -47,6 +55,7 @@ build:
 	docker-compose exec php php artisan config:cache
 	docker-compose exec php php artisan route:cache
 	docker-compose exec php chown -R www-data:www-data .
+	docker-compose exec node npm config set proxy http://100.64.0.1:8080
 	docker-compose exec node npm install
 	docker-compose exec node npm run build
 
